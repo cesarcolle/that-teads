@@ -1,12 +1,14 @@
 package com.teads.auction.actors
 
 import akka.actor.{Actor, Props}
-import com.teads.auction.actors.LotteryActor.LotteryBids
 import com.teads.auction.actors.WinnerActor.LotteryComputing
+
+import scala.collection.mutable
+import scala.collection.mutable.Map
 
 object WinnerActor {
 
-  case class LotteryComputing(bids: List[LotteryBids], solution: List[Int])
+  case class LotteryComputing(bids: Map[String, List[Int]], solution: List[Int])
 
   val winnerActor = Props[WinnerActor]
 }
@@ -16,25 +18,29 @@ object WinnerActor {
   **/
 class WinnerActor extends Actor {
 
-  var mappingBid: Map[String, List[Int]] = Map.empty
+  var mappingBid: mutable.Map[String, List[Int]] = mutable.Map.empty
 
-  private def bidMapping(mapping: List[LotteryBids], maxBid: Int): List[List[Int]] = {
+  private def bidMapping(lotteryList: mutable.Map[String, List[Int]]): mutable.Map[Int, Set[String]] = {
     var matrix = List.empty[List[Int]]
-    var mapping = Map.empty[Int, List[String]]
-
-    for ((_, numbers) <- mapping) {
-      var initialize = List.fill[Int](maxBid + 1)(0)
-      println("init == " + initialize)
-      matrix = initialize :: matrix
+    var mapping = Map.empty[Int, Set[String]]
+    mapping.withDefaultValue(Set.empty[String])
+    // long life to functional.
+    for ( (name, numbers) <- lotteryList) {
+      numbers.foreach(number => {
+        mapping.get(number) match{
+          case Some(names : Set[String]) => mapping(number) =  names + name
+          case None => mapping(number) = Set(name)
+        }
+      })
     }
-    matrix
+    mapping
   }
 
   override def receive: Receive = {
 
     case lottery: LotteryComputing =>
       // O(nln(n))
-      var adjencyMatric = bidMapping(lottery.bids, lottery.solution.max)
+      var mappingLottery = bidMapping(lottery.bids)
 
   }
 }
