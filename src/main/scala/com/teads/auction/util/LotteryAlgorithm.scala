@@ -1,44 +1,31 @@
 package com.teads.auction.util
-import scala.collection.mutable
-
+import com.teads.auction.actors.LotteryActor.LotteryBids
 
 
 object LotteryAlgorithm {
 
 
-  private def cover(solution: Map[Int, List[String]], input : Map[String, List[Int]], result : List[String]): List[String] = {
-    if (input.size < 1)
-      return result
 
+  def winner(bids : List[LotteryBids], price : Int): Map[String, (String, Int)] ={
+    var flatBid = bids.flatMap(bid => bid.numbers.map(number => (bid.name, number)))
 
-    else {
-      var tmp = List.empty[String]
-      val c = solution.keySet.min(Ordering.by( key => solution(key).size))
-      for(x <- solution(c)){
-        tmp = x :: tmp
-        solution
-      }
+    flatBid = flatBid.sortBy(_._2)
+    flatBid = flatBid.filter(_._2 > price)
+
+    var winner = flatBid.last
+    var winningPrice = flatBid.filter(_._1 != winner._1).last
+
+    if (winner == null){
+      winner = ("no winner", price)
     }
-  null
+    if (winningPrice == null){
+      winningPrice = ("no winner", price)
+    }
+
+    Map( "winner" -> winner, "winning_price" -> winningPrice)
+
   }
 
-
-  private def select(solution : Map[Int, List[String]], input : Map[String, List[Int]], r : Int): Unit ={
-    var cols = List.empty[Int]
-    for (j <- input(r)) {
-      for (i <- solution(j)){
-        for (k <- input(i)){
-
-          if (k != j){
-            solution(k) = solution(k).drop(k)
-          }
-        }
-      }
-      cols += solution(j).head
-    }
-    return cols
-
-  }
 
 
 

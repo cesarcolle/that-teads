@@ -3,28 +3,51 @@ Since I understand nothing about the subject of the exercise I have to implement
 I'll change the subject. 
 
 
-## New Subject
+## The subject
 
-### The community lottery
-The lottery gave N numbers.
+### Auction
 
-There is a hidden solution S such that length(S) = N
+Allowing user to declare bids such that :
 
-Users can provide 1..N numbers to find the correct combination.
-BUT it's possible to combine several numbers between participant.
-Thus, we will have winners who they share the reward.
+    -  winner is the one with the highest bid.
+    -  winning proce is the highest bid from a no-winner.
+    
+    
+## Implementation
+### How To ... run
 
-Example :
-A => (1, 2, 3)
-B => (1, 6, 8)
-C => (1, 3, 7)
-D => (5, 8)
-and the given solution : Solution = (1, 2, 3, 5, 8)
+To run this app please :
 
-winners => A, D
+    sbt run
+
+thus, the server will be available to **localhost:8080**
+
+### How to ... use
 
 
-Of course this problem is no deterministic it could be reduces to the n-queens problem => NP problem.
+There is a scenario for example : 
+
+
+```bash
+echo "add bids..."
+curl -H "Content-Type: application/json" -X POST -d '{"name":"xyz", "numbers" : [1, 2] }' http://localhost:8080/addBids
+curl -H "Content-Type: application/json" -X POST -d '{"name":"abc", "numbers" : [3, 4, 5] }' http://localhost:8080/addBids
+curl -H "Content-Type: application/json" -X POST -d '{"name":"yycc", "numbers" : [1, 2] }' http://localhost:8080/addBids
+curl -H "Content-Type: application/json" -X POST -d '{"name":"efg", "numbers" : [8, 9] }' http://localhost:8080/addBids
+curl -H "Content-Type: application/json" -X POST -d '{"name":"yycc", "numbers" : [7, 10] }' http://localhost:8080/addBids
+
+echo "launch lottery"
+curl -H "Content-Type: application/json" -X GET  http://localhost:8080/lottery?reservedPrice=8
+```
+will give you :
+
+```json
+{"winningPrice":{"name":"efg","amount":9},"winnerPerson":{"name":"yycc","amount":10}}
+```
+
+#### Enjoy
+
+
 
 ### Details
 
@@ -32,3 +55,7 @@ Such Scala is a better language for our implementation, we use AKKA framework :
 
 * Exposing API.
 * Multi threading with the actor model.
+
+I think building an app with akka allow you to use deep functionality of scala.
+
+

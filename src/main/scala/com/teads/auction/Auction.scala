@@ -1,9 +1,31 @@
 package com.teads.auction
 
-class Auction {
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.server.Route
+import akka.stream.ActorMaterializer
+import akka.util.Timeout
+import com.teads.auction.route.LotteryRoute
 
-  def main(args: Array[String]): Unit = {
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
+
+
+object Auction extends LotteryRoute{
+
+  val routes: Route = lotteryRoute
+
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
+
+  override implicit def system: ActorSystem = ActorSystem()
+
+  override implicit val timeout: Timeout = Timeout(5 seconds) // needed for `?` below
+
+  def main(args: Array[String]) {
+    Http().bindAndHandle(routes, "localhost", 8080)
+    println("server started...")
+    Await.result(system.whenTerminated, Duration.Inf)
   }
 
 
