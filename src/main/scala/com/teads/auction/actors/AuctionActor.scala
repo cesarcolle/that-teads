@@ -41,7 +41,7 @@ class AuctionActor extends Actor with AuctionHouse {
       sender() ! AuctionMessage("bids gracefully saved")
 
     case Lottery(price) =>
-      sender ! auction()
+      sender ! auction(price)
   }
 
 }
