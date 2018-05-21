@@ -1,22 +1,21 @@
 package com.teads.auction.route
 
 import akka.actor.{ActorRef, ActorSystem, Props}
-import akka.stream.ActorMaterializer
-import com.teads.auction.actors.LotteryActor
-import com.teads.auction.marshal.JsonSupport
 import akka.http.scaladsl.server.Directives._
-import akka.util.Timeout
-import com.teads.auction.actors.LotteryActor.{Lottery, LotteryBids, LotteryError}
 import akka.pattern.ask
-import com.teads.auction.actors.WinnerActor.Winners
+import akka.stream.ActorMaterializer
+import akka.util.Timeout
+import com.teads.auction.actors.AuctionActor
+import com.teads.auction.actors.AuctionActor.{Lottery, LotteryBids, Winner}
+import com.teads.auction.marshal.JsonSupport
 
 
 
 
-trait LotteryRoute extends JsonSupport{
+trait AuctionRoute extends JsonSupport{
 
   implicit def system: ActorSystem
-  val lotteryActor: ActorRef = system.actorOf(Props[LotteryActor])
+  val lotteryActor: ActorRef = system.actorOf(Props[AuctionActor])
   private val actorMaterializer = ActorMaterializer
   implicit val timeout : Timeout
 
@@ -32,7 +31,7 @@ trait LotteryRoute extends JsonSupport{
     path("lottery"){
       get {
         parameter('reservedPrice.as[Int]) {price =>
-          val answer = (lotteryActor ? Lottery(price)).mapTo[Winners]
+          val answer = (lotteryActor ? Lottery(price)).mapTo[Winner]
           complete(answer)
         }
 

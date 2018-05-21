@@ -10,7 +10,7 @@ I'll change the subject.
 Allowing user to declare bids such that :
 
     -  winner is the one with the highest bid.
-    -  winning proce is the highest bid from a no-winner.
+    -  winning price is the highest bid from a no-winner.
     
     
 ## Implementation

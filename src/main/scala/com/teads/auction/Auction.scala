@@ -5,14 +5,14 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
-import com.teads.auction.route.LotteryRoute
+import com.teads.auction.route.AuctionRoute
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
 
 
-object Auction extends LotteryRoute{
+object Auction extends AuctionRoute{
 
   val routes: Route = lotteryRoute
 
