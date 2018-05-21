@@ -12,6 +12,8 @@ Allowing user to declare bids such that :
     -  winner is the one with the highest bid.
     -  winning price is the highest bid from a no-winner.
     
+###### So finally, the winner will pay the auction at the winning price
+    
     
 ## Implementation
 ### How To ... run
@@ -25,7 +27,7 @@ thus, the server will be available to **localhost:8080**
 ### How to ... use
 
 
-There is a scenario for example : 
+This is a example : 
 
 
 ```bash
@@ -42,7 +44,7 @@ curl -H "Content-Type: application/json" -X GET  http://localhost:8080/lottery?r
 will give you :
 
 ```json
-{"winningPrice":{"name":"efg","amount":9},"winnerPerson":{"name":"yycc","amount":10}}
+{"name" : "yycc","amount" : 9}
 ```
 
 #### Enjoy

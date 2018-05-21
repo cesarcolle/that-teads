@@ -1,4 +1,5 @@
 package com.teads.auction.actors
+
 import akka.actor.{ActorSystem, Props}
 import akka.testkit.{ImplicitSender, TestKit}
 import com.teads.auction.actors.AuctionActor._
@@ -17,7 +18,7 @@ class AuctionActorTest() extends TestKit(ActorSystem("MySpec")) with ImplicitSen
     "Save a bid " in {
 
       val winner = system.actorOf(Props[AuctionActor])
-      winner !  LotteryBids("test", List(1, 2, 3))
+      winner ! AuctionBids("test", List(1, 2, 3))
 
       expectMsg(AuctionMessage("bids gracefully saved test"))
     }
@@ -25,13 +26,13 @@ class AuctionActorTest() extends TestKit(ActorSystem("MySpec")) with ImplicitSen
 
       val winner = system.actorOf(Props[AuctionActor])
 
-      winner !  LotteryBids("test", List(4, 5))
+      winner ! AuctionBids("test", List(4, 5))
       expectMsg(AuctionMessage("bids gracefully saved test"))
 
-      winner ! LotteryBids("test2", List(6))
+      winner ! AuctionBids("test2", List(6))
       expectMsg(AuctionMessage("bids gracefully saved test2"))
 
-      winner ! Lottery(4)
+      winner ! Auction(4)
       expectMsg(Winner("test2", 5))
     }
 

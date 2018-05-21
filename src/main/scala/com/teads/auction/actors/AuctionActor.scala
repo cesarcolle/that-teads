@@ -1,6 +1,6 @@
 package com.teads.auction.actors
 
-import akka.actor.{Actor, ActorRef}
+import akka.actor.Actor
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
 import com.teads.auction.auction.AuctionHouse
@@ -10,17 +10,15 @@ import scala.concurrent.duration._
 
 object AuctionActor {
 
-  case class LotteryBids(name: String, numbers: List[Int])
+  case class AuctionBids(name: String, numbers: List[Int])
 
-  case class LotteryAuctions(bids: List[LotteryBids], price: Int)
-
-  case class Lottery(price: Int)
+  case class Auction(price: Int)
 
   case class LotteryError(msg: String)
 
   case class Winner(name: String, amount: Int)
 
-  case class AuctionMessage(msg : String)
+  case class AuctionMessage(msg: String)
 
 
 }
@@ -36,11 +34,11 @@ class AuctionActor extends Actor with AuctionHouse {
   override def receive: Receive = {
 
 
-    case lottery: LotteryBids =>
+    case lottery: AuctionBids =>
       addBid(lottery)
       sender() ! AuctionMessage("bids gracefully saved " + lottery.name)
 
-    case Lottery(price) =>
+    case Auction(price) =>
       sender ! auction(price)
   }
 

@@ -1,15 +1,14 @@
 package com.teads.auction.auction
 
-import com.sun.javafx.scene.control.behavior.OptionalBoolean
-import com.teads.auction.actors.AuctionActor.{LotteryBids, Winner}
+import com.teads.auction.actors.AuctionActor.{AuctionBids, Winner}
 
 import scala.util.Random
 
 trait AuctionHouse {
-  private var bids : Array[LotteryBids] = Array.empty[LotteryBids]
+  private var bids: Array[AuctionBids] = Array.empty[AuctionBids]
 
 
-  def auction(price :Int) : Winner = {
+  def auction(price: Int): Winner = {
     var flatBid = bids.flatMap(bid => bid.numbers.map(number => (bid.name, number)))
     flatBid = flatBid.sortBy(_._2)
     // delete the price beside the initial price
@@ -24,18 +23,14 @@ trait AuctionHouse {
     Winner(auctionWinner._1, winningPrice)
   }
 
-  def reset() : Unit =  {
-    bids = Array.empty[LotteryBids]
+  def reset(): Unit = {
+    bids = Array.empty[AuctionBids]
   }
 
-  def addBid(lottery : LotteryBids): Unit ={
-    bids =  bids :+ lottery
+  def addBid(lottery: AuctionBids): Unit = {
+    bids = bids :+ lottery
 
   }
-
-
-
-
 
 
 }

@@ -11,10 +11,9 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 
 
+object Auction extends AuctionRoute {
 
-object Auction extends AuctionRoute{
-
-  val routes: Route = lotteryRoute
+  val routes: Route = auctionRoute
 
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
