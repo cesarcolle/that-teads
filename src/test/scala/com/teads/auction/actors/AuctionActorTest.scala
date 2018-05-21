@@ -19,17 +19,17 @@ class AuctionActorTest() extends TestKit(ActorSystem("MySpec")) with ImplicitSen
       val winner = system.actorOf(Props[AuctionActor])
       winner !  LotteryBids("test", List(1, 2, 3))
 
-      expectMsg(AuctionMessage("bids gracefully saved"))
+      expectMsg(AuctionMessage("bids gracefully saved test"))
     }
     "make an auction with " in {
 
       val winner = system.actorOf(Props[AuctionActor])
 
       winner !  LotteryBids("test", List(4, 5))
-      expectMsg(AuctionMessage("bids gracefully saved"))
+      expectMsg(AuctionMessage("bids gracefully saved test"))
 
       winner ! LotteryBids("test2", List(6))
-      expectMsg(AuctionMessage("bids gracefully saved"))
+      expectMsg(AuctionMessage("bids gracefully saved test2"))
 
       winner ! Lottery(4)
       expectMsg(Winner("test2", 5))
