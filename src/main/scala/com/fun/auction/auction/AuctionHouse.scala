@@ -1,6 +1,6 @@
-package com.teads.auction.auction
+package com.fun.auction.auction
 
-import com.teads.auction.actors.AuctionActor.{AuctionBids, Winner}
+import com.fun.auction.actors.AuctionActor.{AuctionBids, Winner}
 
 import scala.util.Random
 

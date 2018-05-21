@@ -1,8 +1,8 @@
-package com.teads.auction.actors
+package com.fun.auction.actors
 
 import akka.actor.{ActorSystem, Props}
 import akka.testkit.{ImplicitSender, TestKit}
-import com.teads.auction.actors.AuctionActor._
+import AuctionActor._
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
 

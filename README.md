@@ -1,7 +1,6 @@
 # Information
-Since I understand nothing about the subject of the exercise I have to implement,
-I'll change the subject. 
 
+This is a practise project, to discover the Akka world.
 
 ## The subject
 

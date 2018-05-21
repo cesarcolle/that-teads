@@ -1,8 +1,9 @@
-package com.teads.auction.actors
+package com.fun.auction.actors
 
 import akka.actor.Actor
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
+import com.fun.auction.auction.AuctionHouse
 import com.teads.auction.auction.AuctionHouse
 
 import scala.concurrent.duration._

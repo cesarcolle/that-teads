@@ -1,11 +1,11 @@
-package com.teads.auction
+package com.fun.auction
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
-import com.teads.auction.route.AuctionRoute
+import com.fun.auction.route.AuctionRoute
 
 import scala.concurrent.Await
 import scala.concurrent.duration._

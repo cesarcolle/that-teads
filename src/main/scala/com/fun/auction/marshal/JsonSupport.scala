@@ -1,7 +1,7 @@
-package com.teads.auction.marshal
+package com.fun.auction.marshal
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import com.teads.auction.actors.AuctionActor._
+import com.fun.auction.actors.AuctionActor._
 import spray.json.{DefaultJsonProtocol, RootJsonFormat}
 
 trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {

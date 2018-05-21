@@ -1,6 +1,6 @@
-package com.teads.auction.auction
+package com.fun.auction.auction
 
-import com.teads.auction.actors.AuctionActor.AuctionBids
+import com.fun.auction.actors.AuctionActor.AuctionBids
 import org.scalatest.{BeforeAndAfter, FunSuite}
 
 class AuctionHouseTest extends FunSuite with AuctionHouse with BeforeAndAfter {
